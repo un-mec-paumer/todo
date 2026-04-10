@@ -1,0 +1,23 @@
+services:
+  server:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://database:27017/tasksBase
+    depends_on:
+      - database
+
+  database:
+    image: mongo:latest
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      # Attention aux chemins : misc/tasks.json et misc/init.sh
+      - ./misc/tasks.json:/tasks.json
+      - ./misc/init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+
+volumes:
+  mongo-data:
