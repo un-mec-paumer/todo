@@ -14,7 +14,7 @@ if (dbURI === "merde") {
     process.exit(1);
 }
 
-// console.log(`Connecting to MongoDB at ${dbURI}...`);
+console.log(`Connecting to MongoDB at ${dbURI}...`);
 const db = mongoose.createConnection(dbURI);
 db.useDb("tasks");
 const taskSchema = new mongoose.Schema({
