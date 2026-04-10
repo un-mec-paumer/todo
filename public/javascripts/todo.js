@@ -11,8 +11,12 @@ const setup = async () => {
             'Content-Type': 'application/json'
         }
     }).then(res => res.json());
-
+    console.log('Response from /api/tasks:', res);
     divList.innerHTML = '';
+    if (!res.tasks || res.tasks.length === 0) {
+        displayMessage('Aucune tâche trouvée');
+        return;
+    }
     res.forEach(element => {
         console.log(element);
         const div = document.createElement('div');
@@ -26,11 +30,13 @@ const addTask = async () => {
     const description = document.getElementById('desc').value;
     const urgency = document.getElementById('urgency').value;
 
+    console.log('Description:', description);
+    console.log('Urgency:', urgency);
+
     if (!description || !urgency) {
         displayMessage('Veuillez remplir tous les champs');
         return
     }
-
     const res = await fetch('/api/tasks', {
         method: 'POST',
         headers: {
